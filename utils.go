@@ -11,6 +11,7 @@ import (
 
 // BrowserOpen opens a local browser.
 func BrowserOpen(url string) error {
+	// From: https://gist.github.com/hyg/9c4afcd91fe24316cbf0
 	var cmd string
 	var args []string
 
