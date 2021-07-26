@@ -30,6 +30,7 @@ func BrowserOpen(url string) error {
 
 // RandString generages a random string of n chars
 func RandString(n int) string {
+	// Derived from https://stackoverflow.com/a/55860599
 	buff := make([]byte, int(math.Ceil(float64(n)/2)))
 	rand.Read(buff)
 	str := hex.EncodeToString(buff)
