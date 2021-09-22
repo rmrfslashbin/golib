@@ -4,6 +4,7 @@ package golib
 import (
 	"crypto/rand"
 	"encoding/hex"
+	"fmt"
 	"math"
 	"os/exec"
 	"runtime"
@@ -35,4 +36,20 @@ func RandString(n int) string {
 	rand.Read(buff)
 	str := hex.EncodeToString(buff)
 	return str[:n]
+}
+
+// NumberFormat formats a number with magnitude.
+func NumberFormat(num float64) string {
+	// Inspired by https://stackoverflow.com/a/66105942
+	units := [5]string{"k", "M", "B", "T", "Q"}
+
+	unit := len(fmt.Sprintf("%.0f", math.Floor(num/1.0e+1)))
+
+	x := math.Abs(num) / math.Pow(10, float64(unit-(unit%3)))
+	i := int(math.Floor(float64(unit)/3.0) - 1.0)
+
+	if i < 0 || i > len(units)-1 {
+		return fmt.Sprintf("%.0f", num)
+	}
+	return fmt.Sprintf("%.2f%s", x, units[i])
 }
