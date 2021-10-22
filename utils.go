@@ -1,4 +1,4 @@
-// github.com/rmrfslashbin/golib is a collection of commonly used functions.
+// Package golib is a collection of commonly used functions.
 package golib
 
 import (
