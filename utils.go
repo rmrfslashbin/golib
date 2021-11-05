@@ -3,9 +3,12 @@ package golib
 
 import (
 	"crypto/rand"
+	"crypto/sha256"
 	"encoding/hex"
 	"fmt"
+	"io"
 	"math"
+	"os"
 	"os/exec"
 	"runtime"
 )
@@ -29,13 +32,30 @@ func BrowserOpen(url string) error {
 	return exec.Command(cmd, args...).Start()
 }
 
-// RandString generages a random string of n chars
-func RandString(n int) string {
-	// Derived from https://stackoverflow.com/a/55860599
-	buff := make([]byte, int(math.Ceil(float64(n)/2)))
-	rand.Read(buff)
-	str := hex.EncodeToString(buff)
-	return str[:n]
+// CheckSha256 check the sha-256 sum of a file against the expected value.
+func CheckSha256(filename string, sha256sum string) (bool, error) {
+	// Open the file
+	f, err := os.Open(filename)
+	if err != nil {
+		return false, err
+	}
+	defer f.Close()
+
+	// New hash object
+	hash := sha256.New()
+
+	// Digest the file
+	if _, err := io.Copy(hash, f); err != nil {
+		return false, err
+	}
+
+	// Compare the hashes
+	if ok := sha256sum == hex.EncodeToString(hash.Sum(nil)); ok {
+		// Match!
+		return true, nil
+	}
+	// Fail!
+	return false, nil
 }
 
 // NumberFormat formats a number with magnitude.
@@ -52,4 +72,13 @@ func NumberFormat(num float64) string {
 		return fmt.Sprintf("%.0f", num)
 	}
 	return fmt.Sprintf("%.2f%s", x, units[i])
+}
+
+// RandString generages a random string of n chars
+func RandString(n int) string {
+	// Derived from https://stackoverflow.com/a/55860599
+	buff := make([]byte, int(math.Ceil(float64(n)/2)))
+	rand.Read(buff)
+	str := hex.EncodeToString(buff)
+	return str[:n]
 }
