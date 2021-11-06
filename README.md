@@ -1,6 +1,7 @@
 # golib
 GoLib is a collection of commonly used functions.
 
+[![Coverage Status](https://coveralls.io/repos/github/rmrfslashbin/golib/badge.svg?branch=main)](https://coveralls.io/github/rmrfslashbin/golib?branch=main)
 [![Go](https://github.com/rmrfslashbin/golib/actions/workflows/go.yml/badge.svg)](https://github.com/rmrfslashbin/golib/actions/workflows/go.yml)
 [![Go Report Card](https://goreportcard.com/badge/github.com/rmrfslashbin/golib)](https://goreportcard.com/report/github.com/rmrfslashbin/golib)
 ![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/rmrfslashbin/golib)
